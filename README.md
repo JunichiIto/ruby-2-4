@@ -10,3 +10,7 @@ $ ruby -v
 # Run tests
 $ ruby test/ruby_test.rb
 ```
+
+## License
+
+MIT License.
