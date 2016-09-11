@@ -276,14 +276,14 @@ end
 # https://bugs.ruby-lang.org/issues/10772
 def test_logger_shift_period_suffix
   require 'logger'
+  log_path = File.expand_path('../development.log', __FILE__)
   # development.log.2016-09-01
   # development.log.2016-09-01.1
   # development.log.2016-09-01.2
   # のような名前のログファイルが出力される
-  assert Logger.new('development.log', shift_period_suffix: '%Y-%m-%d')
+  assert Logger.new(log_path, shift_period_suffix: '%Y-%m-%d')
 ensure
-  path = File.expand_path('../development.log', __FILE__)
-  File.unlink(path) if File.exists?(path)
+  File.unlink(log_path) if File.exists?(log_path)
 end
 
 # OpenSSL is extracted as a gem
