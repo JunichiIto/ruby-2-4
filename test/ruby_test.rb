@@ -327,18 +327,14 @@ end
 # https://bugs.ruby-lang.org/issues/12189
 def test_date_time_to_time
   require 'date'
-  assert_equal(
-      '2015-11-12 00:00:00 +0100',
-      DateTime.strptime('2015-11-12 CET', '%Y-%m-%d %Z').to_time.to_s)
+  cet_date_time = DateTime.strptime('2015-11-12 CET', '%Y-%m-%d %Z')
+  assert_equal '2015-11-12 00:00:00 +0100', cet_date_time.to_time.to_s
 end
 
 # https://bugs.ruby-lang.org/issues/12271
 def test_time_to_time
-  require 'date'
-  assert_equal(
-      '2005-02-21 10:11:12 +0100',
-      Time.new(2005, 2, 21, 10, 11, 12, '+01:00').to_time.to_s
-  )
+  cet_time = Time.new(2005, 2, 21, 10, 11, 12, '+01:00')
+  assert_equal '2005-02-21 10:11:12 +0100', cet_time.to_time.to_s
 end
 
 # Tk is removed from stdlib.
