@@ -256,6 +256,12 @@ def test_csv_liberal_parsing_option
       ['Johnson, Dwayne', 'Dwayne "The Rock" Johnson'],
       CSV.parse_line(input, liberal_parsing: true)
   )
+
+  valid_input = '"Johnson, Dwayne","Dwayne ""The Rock"" Johnson"'
+  assert_equal(
+      ['Johnson, Dwayne', 'Dwayne "The Rock" Johnson'],
+      CSV.parse_line(valid_input)
+  )
 end
 
 # https://bugs.ruby-lang.org/issues/12224
