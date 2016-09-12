@@ -103,7 +103,7 @@ def test_ceil_floor_truncate
   assert_equal 11110, 11119.floor(-1)
   assert_equal -11120, -11119.floor(-1)
 
-  # truncate（0 から 自身までの数値で、自身にもっとも近い整数または小数を返す）
+  # 切り捨て（0 から 自身までの数値で、自身にもっとも近い整数または小数を返す）
   assert_equal 1, 1.99.truncate
   assert_equal -1, -1.99.truncate
   assert_equal 1.9, 1.99.truncate(1)
