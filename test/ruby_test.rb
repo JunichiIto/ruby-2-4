@@ -124,7 +124,7 @@ def test_hash_transform_values
   assert_equal({a: 1, b: 4, c: 9}, x)
 end
 
-# https://bugs.ruby-lang.org/issues/12005
+# https://bugs.ruby-lang.org/issues/12005 --------------------
 def test_unify_Fixnum_and_Bignum_into_Integer
   assert_equal Integer, 1.class
   assert_equal Integer, -1.class
@@ -145,6 +145,32 @@ def test_unify_Fixnum_and_Bignum_into_Integer
   assert Fixnum === a
   assert Bignum === a
 end
+
+class ::Fixnum
+  def foo
+    'foo'
+  end
+  def baz
+    'baz'
+  end
+end
+
+class ::Bignum
+  def bar
+    'bar'
+  end
+  def baz
+    'baz!!'
+  end
+end
+
+def test_extend_Integer
+  a = 1
+  assert_equal 'foo', a.foo
+  assert_equal 'bar', a.bar
+  assert_equal 'baz!!', a.baz
+end
+# https://bugs.ruby-lang.org/issues/12005 --------------------
 
 # https://bugs.ruby-lang.org/issues/12447
 def test_integer_digits
@@ -356,6 +382,7 @@ end
 
 # https://bugs.ruby-lang.org/issues/12271
 def test_time_to_time
+  require 'time'
   cet_time = Time.new(2005, 2, 21, 10, 11, 12, '+01:00')
   assert_equal '2005-02-21 10:11:12 +0100', cet_time.to_time.to_s
 end
