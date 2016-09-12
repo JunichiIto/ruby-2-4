@@ -87,9 +87,12 @@ end
 def test_ceil_floor_truncate
   # 切り上げ
   assert_equal 2, 1.11.ceil
+  assert_equal -1, -1.11.ceil
   assert_equal 1.2, 1.11.ceil(1)
+  assert_equal -1.1, -1.11.ceil(1)
   # 負の値も指定可能
   assert_equal 11120, 11111.ceil(-1)
+  assert_equal -11110, -11111.ceil(-1)
 
   # 切り下げ
   assert_equal 1, 1.99.floor
