@@ -84,7 +84,7 @@ def test_file_empty?
 end
 
 # https://bugs.ruby-lang.org/issues/12245
-def test_ceil_floor
+def test_ceil_floor_truncate
   # 切り上げ
   assert_equal 2, 1.11.ceil
   assert_equal 1.2, 1.11.ceil(1)
@@ -93,9 +93,21 @@ def test_ceil_floor
 
   # 切り下げ
   assert_equal 1, 1.99.floor
+  assert_equal -2, -1.99.floor
   assert_equal 1.9, 1.99.floor(1)
+  assert_equal -2, -1.99.floor(1)
   # 負の値も指定可能
   assert_equal 11110, 11119.floor(-1)
+  assert_equal -11120, -11119.floor(-1)
+
+  # truncate（0 から 自身までの数値で、自身にもっとも近い整数または小数を返す）
+  assert_equal 1, 1.99.truncate
+  assert_equal -1, -1.99.truncate
+  assert_equal 1.9, 1.99.truncate(1)
+  assert_equal -1.9, -1.99.truncate(1)
+  # 負の値も指定可能
+  assert_equal 190, 199.truncate(-1)
+  assert_equal -190, -199.truncate(-1)
 end
 
 # https://bugs.ruby-lang.org/issues/12512
