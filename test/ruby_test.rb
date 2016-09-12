@@ -183,7 +183,9 @@ end
 
 # Regexp/String: Updated Unicode version from 8.0.0 to 9.0.0
 # https://bugs.ruby-lang.org/issues/12513
-# No tests.
+def test_unicode_9_0
+  assert "A\u{17000}B".match(/\p{Tangut}/)
+end
 
 # https://bugs.ruby-lang.org/issues/10085
 def test_non_ascii_upcase_downcase_swapcase_capitalize
