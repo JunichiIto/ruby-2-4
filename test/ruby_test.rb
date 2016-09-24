@@ -27,6 +27,7 @@ end
 def test_enumerable_sum
   assert_equal 10, [1, 2, 3, 4].sum
   assert_equal 15, [1, 2, 3, 4].sum(5)
+  assert_equal 0, [].sum
   refute_equal 0.3, [0.1, 0.1, 0.1].sum
   assert_equal 'foobar', ['foo', 'bar'].sum('')
   assert_equal '>>foobar', ['foo', 'bar'].sum('>>')
