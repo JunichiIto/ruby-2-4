@@ -34,7 +34,7 @@ class Person
   end
 end
 
-class RubyTest < Minitest::Test
+class RefinementsTest < Minitest::Test
   # https://bugs.ruby-lang.org/issues/9451
   def test_symbol_to_proc
     assert_equal ['Pugs!', 'Pugs!'], ['a', 'b'].map(&:pugs)
