@@ -333,7 +333,7 @@ def test_logger_shift_period_suffix
   # のような名前のログファイルが出力される
   assert Logger.new(log_path, shift_period_suffix: '%Y-%m-%d')
 ensure
-  File.unlink(log_path) if File.exists?(log_path)
+  File.unlink(log_path) if File.exist?(log_path)
 end
 
 # OpenSSL is extracted as a gem

@@ -18,7 +18,7 @@ class WarningTest < Minitest::Test
 
   # https://bugs.ruby-lang.org/issues/12299
   def test_warn
-    Fixnum
+    assert Fixnum == Integer # Run to give warnings
     assert_equal 1, Warning.warnings.size
     msg = Warning.warnings.first
     assert msg.include?('warning: constant ::Fixnum is deprecated')
