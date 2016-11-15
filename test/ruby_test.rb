@@ -410,4 +410,111 @@ def test_dead_lock
     assert error_info.lines.size > 50
   end
 end
+
+  # preview 3 features -------------------------------
+  def test_rescue_modifier_syntax
+    assert ('1'.to_i rescue nil)
+  end
+
+  # https://bugs.ruby-lang.org/issues/12548
+  def test_round_half
+    assert_equal(12.0, 12.5.round(half: :even))
+    assert_equal(14.0, 13.5.round(half: :even))
+    assert_equal(13.0, 12.5.round(half: :up))
+    assert_equal(14.0, 13.5.round(half: :up))
+  end
+
+  # https://bugs.ruby-lang.org/issues/12039
+  def test_finite_infinite
+    assert 1.finite?
+    refute 1.infinite?
+    assert 1.0.finite?
+    refute 1.0.infinite?
+    assert 1r.finite?
+    refute 1r.infinite?
+    assert Complex(1).finite?
+    refute Complex(1).infinite?
+  end
+
+  # https://bugs.ruby-lang.org/issues/12333
+  def test_array_concat
+    assert [1, 2, 3, 4, 5, 6], [1, 2].concat([3, 4], [5, 6])
+  end
+
+  # https://bugs.ruby-lang.org/issues/2172
+  def test_numerable_chunk
+    assert_instance_of Enumerator, [1, 2, 3].chunk
+  end
+
+  # https://bugs.ruby-lang.org/issues/11818
+  def test_hash_compact
+    hash = { a: 1, b: nil, c: 2 }
+    assert_equal({ a: 1, c: 2 }, hash.compact)
+    assert_equal({ a: 1, b: nil, c: 2 }, hash)
+    assert_equal({ a: 1, c: 2 }, hash.compact!)
+    assert_equal({ a: 1, c: 2 }, hash)
+  end
+
+  # https://bugs.ruby-lang.org/issues/12210
+  def test_set_compare_by_identity
+    require 'set'
+    set = Set.new
+    values = ['a', 'a', 'b', 'b']
+    set.merge(values)
+    refute set.compare_by_identity?
+    assert_equal ['a', 'b'], set.to_a
+
+    set = Set.new
+    values = ['a', 'a', 'b', 'b']
+    set.compare_by_identity
+    set.merge(values)
+    assert set.compare_by_identity?
+    assert_equal ['a', 'a', 'b', 'b'], set.to_a
+  end
+
+  # https://bugs.ruby-lang.org/issues/12333
+  def test_string_concat
+    assert_equal 'abc', 'a'.concat('b', 'c')
+  end
+
+  # https://bugs.ruby-lang.org/issues/12596
+  def test_pathname_empty?
+    require 'tempfile'
+    require 'pathname'
+    Dir.mktmpdir do |dir|
+      assert Pathname(dir).empty?
+    end
+    Tempfile.create("foo") do |f|
+      assert Pathname(f).empty?
+    end
+  end
+
+  # https://bugs.ruby-lang.org/issues/12553
+  def test_io_readlines
+    require 'tempfile'
+    tf = Tempfile.new("foo")
+    tf.print "abc\ndef\nghi\n"
+    tf.close
+
+    File.open(tf.path) do |f|
+      assert_equal ["abc\n", "def\n", "ghi\n"], f.readlines
+      f.rewind
+      assert_equal ["abc", "def", "ghi"], f.readlines(chomp: true)
+    end
+  ensure
+    tf&.unlink
+  end
+
+  # https://bugs.ruby-lang.org/issues/10055
+  def test_shellwords_shellsplit
+    require 'shellwords'
+    assert_equal ['printf', '%s\n'], Shellwords.shellsplit(%q{printf "%s\\n"})
+    assert_equal ['printf', '%s\n'], Shellwords.shellsplit(%q{printf '%s\\n'})
+  end
+
+  # https://bugs.ruby-lang.org/issues/12799
+  def test_ipaddr_compare
+    require 'ipaddr'
+    refute IPAddr.new("1.1.1.1") == "sometext"
+  end
 end
