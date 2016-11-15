@@ -8,7 +8,7 @@ Ruby 2.4 examples
 $ ruby -v
 
 # Run tests
-$ ruby test/ruby_test.rb
+$ rake
 ```
 
 ## License
