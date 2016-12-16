@@ -418,7 +418,7 @@ end
 
 # https://bugs.ruby-lang.org/issues/12548
 def test_round_half
-  assert_equal(12.0, 12.5.round)
+  assert_equal(13.0, 12.5.round)
   assert_equal(14.0, 13.5.round)
   assert_equal(12.0, 12.5.round(half: :even))
   assert_equal(14.0, 13.5.round(half: :even))
@@ -530,5 +530,22 @@ end
 def test_ipaddr_compare
   require 'ipaddr'
   refute IPAddr.new("1.1.1.1") == "sometext"
+end
+
+def test_casecmp?
+  assert 'abc'.casecmp?('ABC')
+  refute 'abc'.casecmp?('DEF')
+  assert :abc.casecmp?(:ABC)
+  refute :abc.casecmp?(:DEF)
+
+  assert_equal 0, 'abc'.casecmp('ABC')
+  assert_equal -1, 'abc'.casecmp('DEF')
+  assert_equal 0, :abc.casecmp(:ABC)
+  assert_equal -1, :abc.casecmp(:DEF)
+end
+
+def test_unpack1
+  assert_equal [65, 66, 67], "ABC".unpack("C*")
+  assert_equal 65, "ABC".unpack1("C*")
 end
 end
