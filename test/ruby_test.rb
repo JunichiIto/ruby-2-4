@@ -212,6 +212,8 @@ end
 def test_regexp_match?
   assert /\d+-\d+-\d+/.match?('2016-09-01')
   assert_nil $~
+  assert '2016-09-01'.match?(/\d+-\d+-\d+/)
+  assert_nil $~
 
   assert /\d+-\d+-\d+/.match('2016-09-01')
   assert_equal '2016-09-01', $~[0]
