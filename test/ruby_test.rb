@@ -214,6 +214,8 @@ def test_regexp_match?
   assert_nil $~
   assert '2016-09-01'.match?(/\d+-\d+-\d+/)
   assert_nil $~
+  assert :hello_world.match?(/\w+_\w+/)
+  assert_nil $~
 
   assert /\d+-\d+-\d+/.match('2016-09-01')
   assert_equal '2016-09-01', $~[0]
@@ -223,6 +225,9 @@ def test_regexp_match?
 
   assert /\d+-\d+-\d+/ === '2016-09-03'
   assert_equal '2016-09-03', $~[0]
+
+  assert /\w+_\w+/.match(:hello_world)
+  assert_equal 'hello_world', $~[0]
 end
 
 # Regexp/String: Updated Unicode version from 8.0.0 to 9.0.0
